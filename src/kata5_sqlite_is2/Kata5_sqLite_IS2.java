@@ -1,23 +1,23 @@
 package kata5_sqlite_is2;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.List;
+import kata5_sqlite_is2.model.Histogram;
+import kata5_sqlite_is2.model.Mail;
+import kata5_sqlite_is2.view.HistogramDisplay;
+import kata5_sqlite_is2.view.MailHistogramBuilder;
+import kata5_sqlite_is2.view.MailListReaderBD;
 
 public class Kata5_sqLite_IS2 {
 
-    public static void main(String[] args) throws SQLException, ClassNotFoundException {
-        Class.forName("org.sqlite.JDBC");
-        try(Connection connection = DriverManager.getConnection("jdbc:sqlite:data/us500.db")){
-            Statement statement = connection.createStatement();
-            ResultSet result = statement.executeQuery("SELECT email FROM people");
-            while(result.next()){
-                String email = result.getString("email");
-                System.out.println(email);
-            }
-        }
+    public static void main(String[] args) throws SQLException, ClassNotFoundException{
+        
+        List<Mail> mailList = MailListReaderBD.read();
+        
+        Histogram<String> histogram = new MailHistogramBuilder().build(mailList);
+        
+        HistogramDisplay histogramDisplay = new HistogramDisplay(histogram, "Histogram Display");
+        histogramDisplay.execute();
     }
     
 }
