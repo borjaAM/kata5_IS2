@@ -9,11 +9,16 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.ui.ApplicationFrame;
 
-public class HistogramDisplay extends ApplicationFrame{
+public class HistogramBarChartDisplay extends ApplicationFrame{
     Histogram<String> histogram;
-
-    public HistogramDisplay(Histogram histogram, String title) {
+    private final String title;
+    private final String xAxisLabel;
+    private final String yAxisLabel;
+    public HistogramBarChartDisplay(Histogram histogram, String title, String xAxisLabel, String yAxisLabel) {
         super(title);
+        this.title = title;
+        this.xAxisLabel = xAxisLabel;
+        this.yAxisLabel = yAxisLabel;
         this.histogram = histogram;
         this.setContentPane(createPanel());
         this.pack();
@@ -29,14 +34,9 @@ public class HistogramDisplay extends ApplicationFrame{
     }
 
     private JFreeChart createChart(DefaultCategoryDataset dataSet) {
-        JFreeChart freeChart = ChartFactory.createBarChart("JFreeChart Histogram Email Domains",
-                "emails domains",
-                "nº emails accounts",
-                dataSet,
-                PlotOrientation.VERTICAL,
-                false,
-                false,
-                rootPaneCheckingEnabled);
+        JFreeChart freeChart = ChartFactory.createBarChart(title, xAxisLabel, yAxisLabel,
+                dataSet, PlotOrientation.VERTICAL,
+                false, false, rootPaneCheckingEnabled);
         return freeChart;
     }
     

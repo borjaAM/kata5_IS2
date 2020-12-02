@@ -17,15 +17,11 @@ public class MailHistogramBuilder {
         });
         return histogram;
     }
-    enum Correos{
-        ;
-    }
+    
     private boolean filtrarDominios(String mail){
         String[] emails = {"yahoo.com", "hotmail.com", "gmail.com", "aol.com", "cox.net"};
         for (String email : emails) {
-            if (mail.equals(email)) {
-                return true;
-            }
+            if (mail.equals(email)) return true;
         }
         return false;
     }
